@@ -31,8 +31,8 @@ export default function ResultCard({ student, onReset }) {
     setIsCapturing(true); // Menyembunyikan tombol agar tidak ada ruang kosong
 
     try {
-      // Tunggu render React selesai menyembunyikan tombol dan memuat logo
-      await new Promise(resolve => setTimeout(resolve, 300));
+      // Tunggu render React selesai menyembunyikan tombol dan memuat logo (800ms khusus untuk delay iPhone/Safari agar gambar selesai ter-render)
+      await new Promise(resolve => setTimeout(resolve, 800));
 
       const dataUrl = await toPng(cardRef.current, {
         quality: 1,
