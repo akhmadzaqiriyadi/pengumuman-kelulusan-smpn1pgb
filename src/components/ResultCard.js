@@ -32,9 +32,16 @@ export default function ResultCard({ student, onReset }) {
     setIsCapturing(true); // Menyembunyikan tombol agar tidak ada ruang kosong
 
     try {
-      // Tunggu render React selesai menyembunyikan tombol dan memuat logo (800ms khusus untuk delay iPhone/Safari agar gambar selesai ter-render)
-      await new Promise(resolve => setTimeout(resolve, 800));
+      // Tunggu render React selesai menyembunyikan tombol
+      await new Promise(resolve => setTimeout(resolve, 300));
 
+      // TRICK KHUSUS iOS/SAFARI: Panggil toPng dua kali.
+      // Panggilan pertama sering gagal nge-render gambar di Safari, tapi memaksa Safari nge-cache aset di canvas.
+      try {
+        await toPng(cardRef.current, { quality: 0.1, pixelRatio: 1 });
+      } catch (e) { /* ignore */ }
+
+      // Panggilan kedua menghasilkan screenshot yang sempurna
       const dataUrl = await toPng(cardRef.current, {
         quality: 1,
         pixelRatio: 2,
