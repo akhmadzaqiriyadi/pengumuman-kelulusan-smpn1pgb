@@ -89,15 +89,15 @@ export default function ResultCard({ student, onReset }) {
       className={`bg-white border border-slate-200 rounded-2xl md:rounded-[2rem] w-full max-w-md md:max-w-lg mx-auto animate-fade-in-up transition-all duration-300 ${isCapturing ? 'p-8 md:p-12 shadow-none' : 'p-6 md:p-10 shadow-xl'}`}
     >
       
-      {/* Header section (ditambah logo kecil agar screenshot terlihat resmi) */}
+      {/* Header section */}
       <div className="text-center mb-5 md:mb-6">
-        {isCapturing && (
-          <div className="mb-4 flex justify-center">
-            {/* Menggunakan tag img standar, bukan komponen Next/Image untuk menghindari lazy loading error di html-to-image */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logostupa.png" alt="Logo SMPN 1 Pagerbarang" className="w-16 md:w-20 h-auto" />
-          </div>
-        )}
+        
+        {/* Logo selalu dirender di DOM agar di-cache browser (mengatasi race condition html-to-image), tapi disembunyikan secara visual saat tidak screenshot */}
+        <div className={`flex justify-center transition-all duration-300 ${isCapturing ? 'mb-4 opacity-100 h-16 md:h-20' : 'opacity-0 h-0 m-0 overflow-hidden'}`}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logostupa.png" alt="Logo SMPN 1 Pagerbarang" className="w-16 md:w-20 h-auto object-contain" />
+        </div>
+
         <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full mb-2 md:mb-3">
           Surat Keterangan Lulus
         </span>
