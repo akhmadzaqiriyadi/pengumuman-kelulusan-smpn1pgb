@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import confetti from 'canvas-confetti';
 import { toPng } from 'html-to-image';
-import Image from 'next/image';
 
 export default function ResultCard({ student, onReset }) {
   const isLulus = student.keterangan === 'LULUS';
@@ -32,8 +31,8 @@ export default function ResultCard({ student, onReset }) {
     setIsCapturing(true); // Menyembunyikan tombol agar tidak ada ruang kosong
 
     try {
-      // Tunggu render React selesai menyembunyikan tombol
-      await new Promise(resolve => setTimeout(resolve, 200));
+      // Tunggu render React selesai menyembunyikan tombol dan memuat logo
+      await new Promise(resolve => setTimeout(resolve, 300));
 
       const dataUrl = await toPng(cardRef.current, {
         quality: 1,
@@ -94,7 +93,9 @@ export default function ResultCard({ student, onReset }) {
       <div className="text-center mb-5 md:mb-6">
         {isCapturing && (
           <div className="mb-4 flex justify-center">
-            <Image src="/logostupa.png" alt="Logo" width={60} height={60} style={{ width: 'auto', height: 'auto' }} />
+            {/* Menggunakan tag img standar, bukan komponen Next/Image untuk menghindari lazy loading error di html-to-image */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logostupa.png" alt="Logo SMPN 1 Pagerbarang" className="w-16 md:w-20 h-auto" />
           </div>
         )}
         <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full mb-2 md:mb-3">
