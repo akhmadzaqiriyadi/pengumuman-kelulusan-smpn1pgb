@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import confetti from 'canvas-confetti';
 import { toPng } from 'html-to-image';
+import { logoBase64 } from '../lib/logoBase64';
 
 export default function ResultCard({ student, onReset }) {
   const isLulus = student.keterangan === 'LULUS';
@@ -95,7 +96,7 @@ export default function ResultCard({ student, onReset }) {
         {/* Logo selalu dirender di DOM agar di-cache browser (mengatasi race condition html-to-image), tapi disembunyikan secara visual saat tidak screenshot */}
         <div className={`flex justify-center transition-all duration-300 ${isCapturing ? 'mb-4 opacity-100 h-16 md:h-20' : 'opacity-0 h-0 m-0 overflow-hidden'}`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logostupa.png" alt="Logo SMPN 1 Pagerbarang" className="w-16 md:w-20 h-auto object-contain" />
+          <img src={logoBase64} alt="Logo SMPN 1 Pagerbarang" className="w-16 md:w-20 h-auto object-contain" />
         </div>
 
         <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full mb-2 md:mb-3">
